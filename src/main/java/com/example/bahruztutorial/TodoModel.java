@@ -1,7 +1,6 @@
 package com.example.bahruztutorial;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TodoModel {
