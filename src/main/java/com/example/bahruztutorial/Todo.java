@@ -1,5 +1,8 @@
 package com.example.bahruztutorial;
 
+/**
+ * This class represents the Todo object
+ */
 public class Todo {
 
     private String title;
