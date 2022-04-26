@@ -3,7 +3,6 @@ package com.example.bahruztutorial;
 import org.slf4j.*;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -53,7 +52,7 @@ public class TodoService {
 
         for (TodoModel todoModel : repository.findAll()) {
             Todo todo = new Todo();
-            setForTodo(todo,todoModel);
+            setForTodoFromTodoModel(todo,todoModel);
             todos.add(todo);
         }
 
@@ -64,7 +63,7 @@ public class TodoService {
         Todo todo = new Todo();
         for (TodoModel todoModel : repository.findAll()) {
             if(todoModel.getId().equals(id)){
-                setForTodo(todo,todoModel);
+                setForTodoFromTodoModel(todo,todoModel);
                 return todo;
             }
         }
@@ -76,7 +75,7 @@ public class TodoService {
         Todo todo = new Todo();
         for (TodoModel todoModel : repository.findAll()) {
             if(todoModel.getCategory().equals(category)){
-                setForTodo(todo,todoModel);
+                setForTodoFromTodoModel(todo,todoModel);
                 return todo;
             }
         }
@@ -90,19 +89,52 @@ public class TodoService {
         for(TodoModel todoModel: repository.findAll()){
             if(ChronoUnit.DAYS.between(LocalDate.now(),todoModel.getDeadline())<=2){
                 Todo todo = new Todo();
-                setForTodo(todo,todoModel);
+                setForTodoFromTodoModel(todo,todoModel);
                 todos.add(todo);
             }
         }
         return todos;
 
     }
-    private void  setForTodo(Todo todo,TodoModel todoModel){
+    private void setForTodoFromTodoModel(Todo todo, TodoModel todoModel){
         todo.setTitle(todoModel.getTitle());
         todo.setCategory(todoModel.getCategory());
         todo.setDeadline(todoModel.getDeadline());
 
 
     }
+
+    public String deleteTodoWithId(String id) {
+        //repository.deleteById(id); bununla et
+        for(TodoModel todoModel: repository.findAll()){
+            System.out.println(todoModel.getId());
+            System.out.println(id);
+            if(todoModel.getId().equals(id)){
+
+                repository.delete(todoModel);
+                return "deleted - " + id;
+
+            }
+        }
+        return "not found - " + id;
+
+    }
+
+    public String updateTodo(String id,Todo todo) {
+        for(TodoModel todoModel:repository.findAll()){
+            if(todoModel.getId().equals(id)){
+                todoModel.setTitle(todo.getTitle());
+                todoModel.setCategory(todo.getCategory());
+                todoModel.setDeadline(todo.getDeadline());
+                repository.save(todoModel);
+                return "updated "+id;
+            }
+
+
+        }
+        return "id not found " +id;
+
+    }
+
 
 }

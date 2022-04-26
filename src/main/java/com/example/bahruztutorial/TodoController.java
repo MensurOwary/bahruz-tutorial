@@ -92,18 +92,24 @@ public class TodoController {
     }
 
     @PostMapping("/{id}")
-    public String updateTodo(@PathVariable String id) {
-        return "update - " + id;
+    public ResponseEntity<String> updateTodo(@PathVariable String id,@RequestBody Todo todo) {
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(todoService.updateTodo(id,todo));
     }
 
     @PostMapping("/{id}/done")
-    public String doneTodo(@PathVariable String id) {
-        return "done - " + id;
+    public ResponseEntity<String> doneTodo(@RequestBody Todo todo) {
+        return null;
     }
 
     @DeleteMapping("/{id}")
-    public String deleteTodo(@PathVariable String id) {
-        return "delete - " + id;
+    public ResponseEntity<String> deleteTodo(@PathVariable String id) {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(todoService.deleteTodoWithId(id));
     }
 
 }

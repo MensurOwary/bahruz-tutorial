@@ -8,6 +8,7 @@ import java.time.LocalDate;
  */
 public class Todo {
 
+
     private String title;
     private LocalDate deadline;
     private String category;
