@@ -123,9 +123,16 @@ public class TodoService {
     public String updateTodo(String id,Todo todo) {
         for(TodoModel todoModel:repository.findAll()){
             if(todoModel.getId().equals(id)){
-                todoModel.setTitle(todo.getTitle());
-                todoModel.setCategory(todo.getCategory());
-                todoModel.setDeadline(todo.getDeadline());
+
+                    todoModel.setTitle(todo.getTitle());
+
+
+                    todoModel.setCategory(todo.getCategory());
+
+
+                    todoModel.setDeadline(todo.getDeadline());
+
+
                 repository.save(todoModel);
                 return "updated "+id;
             }
