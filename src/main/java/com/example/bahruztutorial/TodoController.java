@@ -26,6 +26,25 @@ public class TodoController {
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
+
+    }
+
+    private void testUser(){
+       User user1=new User();
+        user1.setId("101");
+        user1.setPassword("1234");
+        user1.setUserName("A");
+
+        User user2=new User();
+        user2.setId("102");
+        user2.setPassword("12345");
+        user2.setUserName("B");
+        todoService.addUser(user1);
+        todoService.addUser(user2);
+
+
+    }
+private void testTodoList(){
         Todo a=new Todo();
         a.setTitle("test1");
         a.setCategory("test1");
@@ -55,8 +74,7 @@ public class TodoController {
         System.out.println(todoService.addTodo(a2));
         System.out.println(todoService.addTodo(a3));
         System.out.println(todoService.addTodo(a4));
-    }
-
+}
     @PostMapping
     public ResponseEntity<String> addTodo(@RequestBody Todo todo) {
         try {

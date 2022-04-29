@@ -12,10 +12,15 @@ public class TodoService {
     private static final Logger log = LoggerFactory.getLogger(TodoService.class);
 
     private final TodoRepository repository;
+    private final UserRepository userRepository;
 
-    public TodoService(TodoRepository repository) {
+    public TodoService(TodoRepository repository,UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository=userRepository;
     }
+
+
+
 
     public String addTodo(Todo todo) {
         log.info("Received todo with title = {}", todo.getTitle());
@@ -43,6 +48,7 @@ public class TodoService {
         entity.setId(id);
 
         repository.save(entity);
+
 
         return id;
     }
@@ -140,6 +146,22 @@ public class TodoService {
 
         }
         return "id not found " +id;
+
+    }
+
+    public String addUser(User user){
+        if(user.getUserName()==null || user.getUserName().trim().isEmpty()){
+            throw new RuntimeException("Username should not be empty or null");
+        }
+        if(user.getPassword()==null || user.getPassword().trim().isEmpty()){
+            throw new RuntimeException("Password should not be empty or null");
+        }
+
+        String id = UUID.randomUUID().toString();
+        user.setId(id);
+        userRepository.save(user);
+        return user.getUserName();
+
 
     }
 

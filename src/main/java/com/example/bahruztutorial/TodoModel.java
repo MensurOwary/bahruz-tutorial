@@ -8,6 +8,7 @@ public class TodoModel {
 
     @Id
     private String id;
+    private String Userid;
     private String title;
     private LocalDate deadline;
     private String category;
@@ -19,6 +20,14 @@ public class TodoModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserid() {
+        return Userid;
+    }
+
+    public void setUserid(String userid) {
+        Userid = userid;
     }
 
     public String getTitle() {
