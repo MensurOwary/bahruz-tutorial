@@ -148,15 +148,21 @@ public class TodoService {
         return "id not found " +id;
 
     }
+    public Collection<User> getAllUsers() {
+        Collection<User> users = new ArrayList<>();
 
+        for (User user : userRepository.findAll()) {
+
+            users.add(user);
+        }
+
+        return users;
+    }
     public String addUser(User user){
-        if(user.getUserName()==null || user.getUserName().trim().isEmpty()){
-            throw new RuntimeException("Username should not be empty or null");
-        }
-        if(user.getPassword()==null || user.getPassword().trim().isEmpty()){
-            throw new RuntimeException("Password should not be empty or null");
-        }
+       if(!CheckUser(user)){
+           throw new RuntimeException("Username or Password should not be empty or null");
 
+       }
         String id = UUID.randomUUID().toString();
         user.setId(id);
         userRepository.save(user);
@@ -164,6 +170,24 @@ public class TodoService {
 
 
     }
+    public String loginUser(User loginUser){
+        if(!CheckUser(loginUser)){
+            throw new RuntimeException("Username or Password should not be empty or null");
 
+        }
+        for(User user: userRepository.findAll()){
+            if(user.getUserName().equals(loginUser.getUserName())
+                    && user.getPassword().equals(loginUser.getPassword())){
+                System.out.println("deyesen oldu");
+                return "deyesen oldu";
+            }
+        }
+        System.out.println("deyesen olmadi");
+        return "deyesen olmadi";
+    }
+    private boolean CheckUser(User user) {
+        return !(user.getUserName() == null || user.getUserName().trim().isEmpty()
+                || user.getPassword() == null || user.getPassword().trim().isEmpty());
 
+    }
 }

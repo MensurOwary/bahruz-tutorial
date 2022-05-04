@@ -26,6 +26,8 @@ public class TodoController {
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
+        testUser();
+        testTodoList();
 
     }
 
@@ -94,6 +96,11 @@ private void testTodoList(){
         return todoService.getAllTodo();
     }
 
+    @GetMapping("/allUsers")
+    public Collection<User> getAllUsers() {
+        return todoService.getAllUsers();
+    }
+
     @GetMapping("/all/2days")
     public Collection<Todo> get2Days() {
         return todoService.get2Days();
@@ -122,12 +129,19 @@ private void testTodoList(){
         return null;
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTodo(@PathVariable String id) {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(todoService.deleteTodoWithId(id));
+    }
+    @PostMapping("/user")
+    public ResponseEntity<String> addUser(@RequestBody User user){
+
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.loginUser(user));
+
     }
 
 }
